@@ -1,0 +1,58 @@
+* {
+  /*-webkit-box-sizing: border-box;*/
+  /*-moz-box-sizing: border-box;*/
+  box-sizing: border-box;
+}
+
+
+body {
+  display: flex;
+  width: 100%;
+  /*align-items: center;*/
+  justify-content: center;
+}
+
+.App {
+  display: flex;
+  margin: 10em;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*height: 50em;*/
+  width: 40em;
+  flex-wrap: wrap;
+
+}
+
+
+
+.Grid {
+  width: 12em;
+  height: 12em;
+  /*display: inline-block;*/
+  background-color: aqua;
+  margin: 1em;
+  padding: 0.5em;
+  font-family: monospace;
+  font-size: 1rem;
+  /*flex: 1;*/
+}
+
+.Grid p {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.Grid textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  font-size: 1rem;
+  border: none;
+  background-color: #fbfbff;
+  /*display: none;*/
+}
