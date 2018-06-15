@@ -10,11 +10,18 @@ const N = 3;
 
 type State = {
   current_edit: null | number,
-  remove_now: boolean,
-  record: string
+  record: Record
 }
 
 type Props = {}
+
+
+function Record(parent) {
+  this.parent = parent;
+  this.children = _.range(N * N).map(() => {
+    return {"text": "", "child": null}
+  });
+}
 
 class Layer extends Component<Props, State> {
   triggerEdit = (x: number) => {
@@ -25,22 +32,34 @@ class Layer extends Component<Props, State> {
   };
   onClick = () => {
     this.loseFocus();
-    this.setState((old_state) => {
-      old_state.remove_now = !old_state.remove_now;
-      return old_state;
-    });
+  };
+
+  enter = (id: number) => {
+    let record = this.state.record;
+    if (record.children[id].child === null) {
+      record.children[id].child = new Record(record);
+    }
+    this.setState({record: record.children[id].child});
+  };
+
+  pop = () => {
+    const record = this.state.record;
+    if (record.parent !== null) {
+      this.setState({record: this.state.record.parent})
+    }
   };
 
   changeRecord = (id: number, value: string) => {
-    this.setState({record: value});
+    let record = this.state.record;
+    record.children[id].text = value;
+    this.setState({record: record});
   };
 
   constructor() {
     super();
     this.state = {
       current_edit: null,
-      remove_now: false,
-      record: "",
+      record: new Record(null),
     }
   }
 
@@ -57,15 +76,19 @@ class Layer extends Component<Props, State> {
         column={j}
         trigger_edit={this.triggerEdit}
         exit_edit={this.loseFocus}
-        remove={this.state.remove_now}
         edit={this.state.current_edit === id}
-        record={this.state.record}
+        record={this.state.record.children[id].text}
         change={this.changeRecord}
+        enter={this.enter}
+        out={this.pop}
       />)
     }));
 
     return (
-      <div className="Layer" onClick={this.onClick}>{grids}</div>
+      <div className="Layer" onClick={this.onClick}>
+        <div className="grids">{grids}</div>
+        <button className="pop" onClick={this.pop}>⇧</button>
+      </div>
     );
   }
 }

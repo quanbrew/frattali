@@ -1,18 +1,60 @@
 
 .Grid {
-  padding: 2em;
   background-color: #d4ffc5;
-
-  height: 20em;
-  width: 20em;
-  margin: 0.5em;
+  padding: 0.25em;
+  position: relative;
 }
 
-.Grid > textarea {
+.Grid .inner {
+  width: 100%;
+  height: 100%;
+}
+
+.Grid .inner p {
+  word-break: break-word;
+  margin: 0;
+  padding: 0;
+}
+
+.Grid textarea {
+  background-color: #e1ffde;
   width: 100%;
   height: 100%;
   resize: none;
   border: none;
   margin: 0;
   padding: 0;
+}
+
+.Grid button {
+  visibility: hidden;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
+
+.Grid:hover button {
+  visibility: visible;
+}
+
+.Layer {
+  margin: 0 auto;
+  position: relative;
+}
+
+.Layer .grids {
+  display: grid;
+  grid-template-columns: repeat(3, 12em);
+  grid-template-rows: repeat(3, 12em);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.pop {
+  /*width: 3em;*/
+  /*height: 3em;*/
+  font-size: 3em;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
 }

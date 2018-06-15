@@ -6,12 +6,12 @@ type Props = {
   exit_edit: () => void,
   id: number,
   edit: boolean,
-  remove: boolean,
   row: number,
   column: number,
   record: any,
-  change: (number, string) => void
-  // path: Array<number>,
+  change: (number, string) => void,
+  enter: (number) => void,
+  out: () => void,
 }
 
 type State = {
@@ -37,10 +37,6 @@ class Grid extends Component<Props, State> {
     this.props.trigger_edit(this.props.id);
   };
   onWheel = (e: SyntheticWheelEvent<>) => {
-    console.log(e.deltaY);
-    console.log(e.currentTarget);
-    if (e.deltaY < 0) {
-    }
   };
 
   constructor() {
@@ -75,7 +71,14 @@ class Grid extends Component<Props, State> {
         className={"Grid row-" + this.props.row + " col-" + this.props.column}
         onClick={this.onClick}
         onWheel={this.onWheel}
-      >{inner}</div>
+      >
+        <div className="inner">{inner}</div>
+        <button onClick={(e) => {
+          e.stopPropagation();
+          this.props.enter(this.props.id)
+        }}>⬇︎
+        </button>
+      </div>
     );
   }
 }
