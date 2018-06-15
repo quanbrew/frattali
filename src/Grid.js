@@ -7,6 +7,11 @@ type Props = {
   id: number,
   edit: boolean,
   remove: boolean,
+  row: number,
+  column: number,
+  record: any,
+  change: (number, string) => void
+  // path: Array<number>,
 }
 
 type State = {
@@ -16,7 +21,10 @@ type State = {
 class Grid extends Component<Props, State> {
   handleChange = (event: SyntheticEvent<HTMLTextAreaElement>) => {
     const value = (event.currentTarget: HTMLTextAreaElement).value;
-    this.setState({text: value});
+    if (value !== this.props.record) {
+      console.log(value);
+      this.props.change(this.props.id, value);
+    }
   };
   onKeyDown = (event: SyntheticKeyboardEvent<>) => {
     const ESC_CODE = 27;
@@ -28,30 +36,46 @@ class Grid extends Component<Props, State> {
     event.stopPropagation();
     this.props.trigger_edit(this.props.id);
   };
+  onWheel = (e: SyntheticWheelEvent<>) => {
+    console.log(e.deltaY);
+    console.log(e.currentTarget);
+    if (e.deltaY < 0) {
+    }
+  };
 
   constructor() {
     super();
     this.state = {
-      'text': "",
+      text: "",
     }
   }
 
   render() {
-    const input = (<textarea className="text_edit" autoFocus value={this.state.text} onKeyDown={this.onKeyDown}
-                             onChange={this.handleChange}/>);
+    const text = this.props.record;
+    const input = (<textarea
+        className="text_edit"
+        autoFocus
+        value={text}
+        onKeyDown={this.onKeyDown}
+        onWheel={(e) => {
+          e.stopPropagation()
+        }}
+        onChange={this.handleChange}/>
+    );
 
     let inner = null;
     if (this.props.edit) {
       inner = input;
     }
     else {
-      inner = <p>{this.state.text}</p>;
+      inner = <p>{text}</p>;
     }
     return (
-      <td className={this.props.remove ? "Grid Remove-Grid" : "Grid"}
-          onClick={this.onClick}>
-        {inner}
-      </td>
+      <div
+        className={"Grid row-" + this.props.row + " col-" + this.props.column}
+        onClick={this.onClick}
+        onWheel={this.onWheel}
+      >{inner}</div>
     );
   }
 }
