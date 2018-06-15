@@ -10,7 +10,8 @@ const N = 3;
 
 type State = {
   current_edit: null | number,
-  record: Record
+  record: Record,
+  popping: boolean
 }
 
 type Props = {}
@@ -45,8 +46,13 @@ class Layer extends Component<Props, State> {
   pop = () => {
     const record = this.state.record;
     if (record.parent !== null) {
-      this.setState({record: this.state.record.parent})
+      this.setState({record: this.state.record.parent, popping: true});
     }
+  };
+
+  pop_done = () => {
+    console.log("done");
+    this.setState({popping: false})
   };
 
   changeRecord = (id: number, value: string) => {
@@ -60,6 +66,7 @@ class Layer extends Component<Props, State> {
     this.state = {
       current_edit: null,
       record: new Record(null),
+      popping: false
     }
   }
 
@@ -69,6 +76,7 @@ class Layer extends Component<Props, State> {
 
     const grids = row_id.map((i) => _.range(N).map((j) => {
       const id = i * N + j;
+      console.log(this.state.record);
       return (<Grid
         key={id}
         id={id}
@@ -84,9 +92,16 @@ class Layer extends Component<Props, State> {
       />)
     }));
 
+
     return (
       <div className="Layer" onClick={this.onClick}>
-        <div className="grids">{grids}</div>
+        <div
+          className={"grids" + (this.state.popping ? " popping" : "")}
+          ref='grids'
+          onTransitionEnd={this.pop_done}
+        >
+          {grids}
+        </div>
         <button className="pop" onClick={this.pop}>⇧</button>
       </div>
     );

@@ -3,6 +3,7 @@
   background-color: #d4ffc5;
   padding: 0.25em;
   position: relative;
+  transition: 1s;
 }
 
 .Grid .inner {
@@ -10,14 +11,16 @@
   height: 100%;
 }
 
-.Grid .inner p {
+.Grid .inner pre {
   word-break: break-word;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 .Grid textarea {
   background-color: #e1ffde;
+  font-family: monospace;
   width: 100%;
   height: 100%;
   resize: none;
@@ -38,23 +41,52 @@
 }
 
 .Layer {
-  margin: 0 auto;
+  /*margin: 4em auto;*/
   position: relative;
 }
 
 .Layer .grids {
+  margin-left: 5em;
   display: grid;
   grid-template-columns: repeat(3, 12em);
   grid-template-rows: repeat(3, 12em);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
+  transition: 1s;
+}
+
+.popping {
+  grid-template-columns: repeat(3, 0em);
+  grid-template-rows: repeat(3, 0em);
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.popping .Grid {
+  /*width: 0;*/
+  /*height: 0;*/
+
 }
 
 .pop {
   /*width: 3em;*/
   /*height: 3em;*/
-  font-size: 3em;
+  font-size: 2em;
   position: fixed;
-  bottom: 1em;
-  right: 1em;
+  top: 4px;
+  left: 4px;
+  width: 2em;
+  height: 2em;
+  border-radius: 1.5em;
+  background-color: #7bcd72;
+  color: #FFF;
+}
+
+.pop:hover {
+  background-color: limegreen;
+}
+
+.pop:active {
+  background-color: #00a836;
 }

@@ -64,7 +64,7 @@ class Grid extends Component<Props, State> {
       inner = input;
     }
     else {
-      inner = <p>{text}</p>;
+      inner = <pre>{text}</pre>;
     }
     return (
       <div
