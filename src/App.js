@@ -7,11 +7,6 @@ import Layer from './Layer';
 type State = {}
 
 class App extends Component<void, State> {
-  constructor() {
-    super();
-  }
-
-
   render() {
     return (
       <main className="App">
